@@ -1,4 +1,4 @@
-package com.example.persistenciadatos;
+package com.example.persistenciadatos.Ejemplo1;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import com.example.persistenciadatos.R;
 
 import static com.example.persistenciadatos.Encriptacion.*;
 

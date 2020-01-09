@@ -9,8 +9,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ActivityMostrar"></activity>
-        <activity android:name=".Ejemplo1" />
+        <activity
+            android:name=".EjemploSettings.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".EjemploSettings.Ejemplo2">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.persistenciadatos.EjemploSettings.Ejemplo2" />
+        </activity>
+        <activity android:name=".EjemploSettings.Ejemplo2" />
+        <activity
+            android:name=".Ejemplo2"
+            android:label="@string/title_activity_ejemplo2"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Ejemplo1.ActivityMostrar" />
+        <activity android:name=".Ejemplo1.Ejemplo1" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

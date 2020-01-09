@@ -4,26 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Ejemplo1.ActivityMostrar">
+    tools:context=".EjemploSettings.Ejemplo2">
 
-    <TextView
-        android:id="@+id/textoMostrar"
+    <EditText
+        android:id="@+id/textoPrevisualizar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:ems="10"
+        android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.339" />
+        app:layout_constraintVertical_bias="0.153" />
 
     <Button
-        android:id="@+id/btnVolver"
+        android:id="@+id/btnVisualizar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Volver"
+        android:text="Previsualizar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textoPrevisualizar"
+        app:layout_constraintVertical_bias="0.088" />
+
+    <TextView
+        android:id="@+id/textoFinal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textoMostrar" />
+        app:layout_constraintTop_toBottomOf="@+id/btnVisualizar"
+        app:layout_constraintVertical_bias="0.342" />
 </androidx.constraintlayout.widget.ConstraintLayout>

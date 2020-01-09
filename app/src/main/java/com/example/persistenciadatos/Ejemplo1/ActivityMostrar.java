@@ -1,4 +1,4 @@
-package com.example.persistenciadatos;
+package com.example.persistenciadatos.Ejemplo1;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,11 +10,13 @@ import android.widget.Button;
 import android.widget.TextView;
 
 
-import static com.example.persistenciadatos.Ejemplo1.DEFAULT_TAM;
-import static com.example.persistenciadatos.Ejemplo1.DEFAULT_TEXTO;
-import static com.example.persistenciadatos.Ejemplo1.PREFERENCES;
-import static com.example.persistenciadatos.Ejemplo1.PREF_TAM;
-import static com.example.persistenciadatos.Ejemplo1.PREF_TEXTO;
+import com.example.persistenciadatos.R;
+
+import static com.example.persistenciadatos.Ejemplo1.Ejemplo1.DEFAULT_TAM;
+import static com.example.persistenciadatos.Ejemplo1.Ejemplo1.DEFAULT_TEXTO;
+import static com.example.persistenciadatos.Ejemplo1.Ejemplo1.PREFERENCES;
+import static com.example.persistenciadatos.Ejemplo1.Ejemplo1.PREF_TAM;
+import static com.example.persistenciadatos.Ejemplo1.Ejemplo1.PREF_TEXTO;
 import static com.example.persistenciadatos.Encriptacion.*;
 
 
