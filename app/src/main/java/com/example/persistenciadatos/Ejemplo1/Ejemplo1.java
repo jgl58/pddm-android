@@ -48,16 +48,16 @@ public class Ejemplo1 extends AppCompatActivity {
         tamGuardado = findViewById(R.id.tamGuardado);
 
 
-        textoGuardado.setText(decrypt(preferences.getString(encrypt(PREF_TEXTO),encrypt(DEFAULT_TEXTO))));
-        tamGuardado.setText(decrypt(preferences.getString(encrypt(PREF_TAM), encrypt(DEFAULT_TAM))));
+        textoGuardado.setText(decode(preferences.getString(encode(PREF_TEXTO), encode(DEFAULT_TEXTO))));
+        tamGuardado.setText(decode(preferences.getString(encode(PREF_TAM), encode(DEFAULT_TAM))));
 
 
         guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.putString(encrypt(PREF_TEXTO), encrypt(String.valueOf(texto.getText())));
-                editor.putString(encrypt(PREF_TAM), encrypt(String.valueOf(tamano.getProgress())));
+                editor.putString(encode(PREF_TEXTO), encode(String.valueOf(texto.getText())));
+                editor.putString(encode(PREF_TAM), encode(String.valueOf(tamano.getProgress())));
                 editor.commit();
 
                 Intent intent = new Intent(getApplicationContext(),ActivityMostrar.class);
@@ -77,8 +77,8 @@ public class Ejemplo1 extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         preferences = getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
-        textoGuardado.setText(decrypt(preferences.getString(encrypt(PREF_TEXTO),encrypt(DEFAULT_TEXTO))));
-        tamGuardado.setText(decrypt(preferences.getString(encrypt(PREF_TAM), encrypt(DEFAULT_TAM))));
+        textoGuardado.setText(decode(preferences.getString(encode(PREF_TEXTO), encode(DEFAULT_TEXTO))));
+        tamGuardado.setText(decode(preferences.getString(encode(PREF_TAM), encode(DEFAULT_TAM))));
 
     }
 }

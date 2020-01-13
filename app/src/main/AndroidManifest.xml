@@ -9,6 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".EjemploFicheros.Fichero"></activity>
+        <activity android:name=".EjemploFicheros.ExternalStorage" />
+        <activity android:name=".EjemploFicheros.Ficheros" />
         <activity
             android:name=".EjemploSettings.SettingsActivity"
             android:label="@string/title_activity_settings"

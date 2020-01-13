@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EjemploFicheros.ExternalStorage">
+
+    <CheckBox
+        android:id="@+id/md_unknown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:text="MEDIA_UNKOWN"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <CheckBox
+        android:id="@+id/md_read_only"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MEDIA_READ_ONLY"
+        app:layout_constraintStart_toStartOf="@+id/md_removed"
+        app:layout_constraintTop_toBottomOf="@+id/md_removed" />
+
+    <CheckBox
+        android:id="@+id/md_bad_removal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MEDIA_BAD_REMOVAL"
+        app:layout_constraintStart_toStartOf="@+id/md_checking"
+        app:layout_constraintTop_toBottomOf="@+id/md_checking" />
+
+    <CheckBox
+        android:id="@+id/mf_nofs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MEDIA_NOFS"
+        app:layout_constraintStart_toStartOf="@+id/md_bad_removal"
+        app:layout_constraintTop_toBottomOf="@+id/md_bad_removal" />
+
+    <CheckBox
+        android:id="@+id/md_mounted"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MEDIA_MOUNTED"
+        app:layout_constraintStart_toStartOf="@+id/md_unknown"
+        app:layout_constraintTop_toBottomOf="@+id/md_unknown" />
+
+    <CheckBox
+        android:id="@+id/md_unmountable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MEDIA_UNMOUNTABLE"
+        app:layout_constraintStart_toStartOf="@+id/mf_nofs"
+        app:layout_constraintTop_toBottomOf="@+id/mf_nofs" />
+
+    <CheckBox
+        android:id="@+id/md_shared"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MEDIA_SHARED"
+        app:layout_constraintStart_toStartOf="@+id/md_unmounted"
+        app:layout_constraintTop_toBottomOf="@+id/md_unmounted" />
+
+    <CheckBox
+        android:id="@+id/md_unmounted"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MEDIA_UNMOUNTED"
+        app:layout_constraintStart_toStartOf="@+id/md_read_only"
+        app:layout_constraintTop_toBottomOf="@+id/md_read_only" />
+
+    <CheckBox
+        android:id="@+id/md_checking"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MEDIA_CHECKING"
+        app:layout_constraintStart_toStartOf="@+id/md_shared"
+        app:layout_constraintTop_toBottomOf="@+id/md_shared" />
+
+    <CheckBox
+        android:id="@+id/md_removed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MEDIA_REMOVED"
+        app:layout_constraintStart_toStartOf="@+id/md_mounted"
+        app:layout_constraintTop_toBottomOf="@+id/md_mounted" />
+
+    <Button
+        android:id="@+id/btnVolverStorage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Volver"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/md_unmountable" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -34,8 +34,8 @@ public class ActivityMostrar extends AppCompatActivity {
         preferences = getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
         texto = findViewById(R.id.textoMostrar);
 
-        String tam = decrypt(preferences.getString(encrypt(PREF_TAM), encrypt(DEFAULT_TAM)));
-        texto.setText(decrypt(preferences.getString(encrypt(PREF_TEXTO),encrypt(DEFAULT_TEXTO))));
+        String tam = decode(preferences.getString(encode(PREF_TAM), encode(DEFAULT_TAM)));
+        texto.setText(decode(preferences.getString(encode(PREF_TEXTO), encode(DEFAULT_TEXTO))));
         texto.setTextSize(Float.parseFloat(tam));
 
 
