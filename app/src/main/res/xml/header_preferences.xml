@@ -18,14 +18,14 @@
 
     <Preference
         app:fragment="com.example.persistenciadatos.EjemploSettings.SettingsActivity$MessagesFragment"
-        app:icon="@drawable/messages"
+        app:icon="@android:drawable/ic_menu_help"
         app:key="messages_header"
-        app:title="@string/messages_header" />
+        app:title="Básico" />
 
     <Preference
         app:fragment="com.example.persistenciadatos.EjemploSettings.SettingsActivity$SyncFragment"
-        app:icon="@drawable/sync"
+        app:icon="@android:drawable/ic_menu_view"
         app:key="sync_header"
-        app:title="@string/sync_header" />
+        app:title="Avanzado"/>
 
 </PreferenceScreen>

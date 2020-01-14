@@ -23,7 +23,7 @@ public class Ejemplo2 extends AppCompatActivity {
     Button btnVisualizar, btnSalir;
     EditText texto;
     SharedPreferences preferences;
-    float textSize;
+    float textSize, rotacion, alpha;
     String color, background;
     Boolean negrita = false, cursiva = false;
 
@@ -46,6 +46,8 @@ public class Ejemplo2 extends AppCompatActivity {
                 textoFinal.setTextSize(textSize);
                 textoFinal.setBackgroundColor(Color.parseColor(background));
                 textoFinal.setTextColor(Color.parseColor(color));
+                textoFinal.setRotation(rotacion);
+                textoFinal.setAlpha(alpha);
                 textoFinal.setTypeface(null,Typeface.NORMAL);
                 if(negrita) {
                     textoFinal.setTypeface(null, Typeface.BOLD);
@@ -72,6 +74,8 @@ public class Ejemplo2 extends AppCompatActivity {
         background = preferences.getString("background","#FFFFFF");
         negrita = preferences.getBoolean("bold",false);
         cursiva = preferences.getBoolean("italic",false);
+        alpha = Float.parseFloat(preferences.getString("transparencia", "0"));
+        rotacion = Float.parseFloat(preferences.getString("rotacion", "0"));
     }
 
     @Override

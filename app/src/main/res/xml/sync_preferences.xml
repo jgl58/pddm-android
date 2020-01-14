@@ -16,15 +16,20 @@
 
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <SwitchPreferenceCompat
-        app:key="sync"
-        app:title="@string/sync_title" />
+    <ListPreference
+        app:defaultValue="0.0"
+        app:entries="@array/transparencia"
+        app:entryValues="@array/transparencia"
+        app:key="transparencia"
+        app:title="Transparencia"
+        app:useSimpleSummaryProvider="true" />
 
-    <SwitchPreferenceCompat
-        app:dependency="sync"
-        app:key="attachment"
-        app:summaryOff="@string/attachment_summary_off"
-        app:summaryOn="@string/attachment_summary_on"
-        app:title="@string/attachment_title" />
+    <ListPreference
+        app:defaultValue="0"
+        app:entries="@array/rotacion"
+        app:entryValues="@array/rotacion"
+        app:key="rotacion"
+        app:title="Rotación"
+        app:useSimpleSummaryProvider="true" />
 
 </PreferenceScreen>
