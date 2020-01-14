@@ -14,7 +14,8 @@
   ~ limitations under the License.
   -->
 
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ListPreference
         app:defaultValue="32"
@@ -39,5 +40,14 @@
         app:key="background"
         app:title="Color de fondo"
         app:useSimpleSummaryProvider="true" />
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="bold"
+        android:title="Negrita" />
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="italic"
+        android:title="Cursiva" />
+
 
 </PreferenceScreen>
