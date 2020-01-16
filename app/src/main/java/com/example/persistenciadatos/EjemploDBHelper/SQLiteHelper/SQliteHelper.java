@@ -49,12 +49,10 @@ public class SQliteHelper extends SQLiteOpenHelper {
     }
 
     public Cursor getUsuario(String id, SQLiteDatabase db){
-
-        String[] columnas = new String[]{"id"};
         String[] args = new String[]{id};
 
-        Cursor result = db.query("Usuarios",columnas,"id=?",args,null,null,null);
-
+        //Cursor result = db.query("Usuarios",columnas,"id=?",args,null,null,null);
+        Cursor result = db.rawQuery("SELECT * FROM Usuarios WHERE id=?",args);
         return result;
     }
 

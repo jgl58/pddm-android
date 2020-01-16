@@ -35,8 +35,14 @@ public class ActualizarActivity extends AppCompatActivity {
                 nombreCompleto.setText(result.getString(3));
                 email.setText(result.getString(4));
             }while (result.moveToNext());
+            db.close();
         }
 
+
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
         db.close();
     }
 

@@ -53,6 +53,11 @@ public class LoginUsuarios extends AppCompatActivity {
         });
 
     }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        db.close();
+    }
 
     public Dialog mostrarDialog() {
         // Use the Builder class for convenient dialog construction

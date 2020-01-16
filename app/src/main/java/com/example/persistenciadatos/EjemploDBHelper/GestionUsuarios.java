@@ -45,6 +45,13 @@ public class GestionUsuarios extends AppCompatActivity implements AdapterView.On
         iniciarElementos();
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        db.close();
+    }
+
     public void cargarUsuarios(){
         Cursor result = dbHelper.consultarUsuarios(db);
         if(result.moveToFirst()){
@@ -52,6 +59,7 @@ public class GestionUsuarios extends AppCompatActivity implements AdapterView.On
                 mapUsuarios.put(result.getInt(0),result.getString(1));
                 usuarios.add(result.getString(1));
             }while (result.moveToNext());
+
         }
 
     }
