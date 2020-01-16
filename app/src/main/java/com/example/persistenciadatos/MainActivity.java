@@ -8,12 +8,14 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.persistenciadatos.Ejemplo1.Ejemplo1;
+import com.example.persistenciadatos.EjemploDBHelper.GestionUsuarios;
+import com.example.persistenciadatos.EjemploDBHelper.LoginUsuarios;
 import com.example.persistenciadatos.EjemploFicheros.Ficheros;
 import com.example.persistenciadatos.EjemploSettings.Ejemplo2;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btnEjemplo1, btnEjemplo2, btnEjemplo3;
+    Button btnEjemplo1, btnEjemplo2, btnEjemplo3, btnSqlite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
         btnEjemplo1 = findViewById(R.id.btnEjemplo1);
         btnEjemplo2 = findViewById(R.id.btnEjemplo2);
         btnEjemplo3 = findViewById(R.id.btnEjemplo3);
+        btnSqlite = findViewById(R.id.btnSqlite);
+
 
         btnEjemplo1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,6 +46,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Ficheros.class);
+                startActivity(intent);
+            }
+        });
+
+        btnSqlite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), LoginUsuarios.class);
                 startActivity(intent);
             }
         });
