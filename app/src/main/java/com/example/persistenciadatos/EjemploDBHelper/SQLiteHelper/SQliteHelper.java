@@ -1,5 +1,6 @@
 package com.example.persistenciadatos.EjemploDBHelper.SQLiteHelper;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -29,6 +30,9 @@ public class SQliteHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.d("Debug","Upgrade");
+        db.execSQL("DROP TABLE IF EXISTS Usuarios");
+        db.execSQL(createTable);
+        db.execSQL(createUser);
     }
 
     public Boolean consultarUsuario(String nombre, String password, SQLiteDatabase db){
@@ -56,11 +60,33 @@ public class SQliteHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    public void deleteUsuario(String id, SQLiteDatabase db){
+        String[] args = new String[]{id};
+
+        db.delete("Usuarios","id=?",args);
+    }
+
     public Cursor consultarUsuarios(SQLiteDatabase db){
 
         //Cursor result = db.query("Usuarios",columnas,"nombre_usuario=? and password=?",args,null,null,null);
         Cursor result = db.rawQuery("SELECT * FROM Usuarios",null);
 
         return result;
+    }
+
+    public void actualizarUsuario(ContentValues values, String id, SQLiteDatabase db){
+        String[] args = new String[]{id};
+        db.update("Usuarios",values,"id=?",args);
+    }
+
+    public Boolean crearUsuario(ContentValues values, SQLiteDatabase db){
+        try {
+            db.insertOrThrow("Usuarios", null, values);
+            return true;
+
+        }catch (Exception e){
+            Log.d("Debug", "No se ha podido crear el usuario");
+            return false;
+        }
     }
 }

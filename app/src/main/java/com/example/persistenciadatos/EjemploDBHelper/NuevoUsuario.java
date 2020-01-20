@@ -1,9 +1,11 @@
 package com.example.persistenciadatos.EjemploDBHelper;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.ContentValues;
-import android.database.Cursor;
+import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -13,31 +15,20 @@ import android.widget.EditText;
 import com.example.persistenciadatos.EjemploDBHelper.SQLiteHelper.SQliteHelper;
 import com.example.persistenciadatos.R;
 
-public class ActualizarActivity extends AppCompatActivity {
+public class NuevoUsuario extends AppCompatActivity {
+
     SQliteHelper dbHelper;
     SQLiteDatabase db;
     Button btnGuardar;
     EditText nombre, password, nombreCompleto, email;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_actualizar);
+        setContentView(R.layout.activity_nuevo_usuario);
         inicializarElementos();
-
         dbHelper = new SQliteHelper(this,"DBUsuarios",null,1);
         db = dbHelper.getWritableDatabase();
-
-
-        Cursor result = dbHelper.getUsuario(getIntent().getStringExtra("ID"),db);
-        if(result.moveToFirst()){
-            do{
-                nombre.setText(result.getString(1));
-                password.setText(result.getString(2));
-                nombreCompleto.setText(result.getString(3));
-                email.setText(result.getString(4));
-            }while (result.moveToNext());
-
-        }
 
         btnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,12 +38,26 @@ public class ActualizarActivity extends AppCompatActivity {
                 values.put("nombre_completo", String.valueOf(nombreCompleto.getText()));
                 values.put("password", String.valueOf(password.getText()));
                 values.put("email", String.valueOf(email.getText()));
-                dbHelper.actualizarUsuario(values,getIntent().getStringExtra("ID"),db);
-                finish();
+                if(dbHelper.crearUsuario(values,db)){
+                    finish();
+                }else{
+                    mostrarDialog().show();
+                }
+
             }
         });
-
-
+    }
+    public Dialog mostrarDialog() {
+        // Use the Builder class for convenient dialog construction
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Error al crear el usuario")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // FIRE ZE MISSILES!
+                    }
+                });
+        // Create the AlertDialog object and return it
+        return builder.create();
     }
     @Override
     protected void onDestroy() {

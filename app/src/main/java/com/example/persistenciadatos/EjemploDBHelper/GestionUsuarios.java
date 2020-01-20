@@ -23,11 +23,12 @@ import java.util.Map;
 
 public class GestionUsuarios extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    Button btnActualizar;
+    Button btnActualizar, btnNuevo, btnEliminar;
     Map<Integer,String> mapUsuarios;
     SQliteHelper dbHelper;
     SQLiteDatabase db;
     List<String> usuarios;
+    ArrayAdapter<String> adapter;
     Spinner spinner;
     String userId = "1";
 
@@ -43,8 +44,24 @@ public class GestionUsuarios extends AppCompatActivity implements AdapterView.On
 
         cargarUsuarios();
         iniciarElementos();
+
+
+        btnEliminar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dbHelper.deleteUsuario(userId,db);
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        mapUsuarios.clear();
+        usuarios.clear();
+        cargarUsuarios();
+    }
 
     @Override
     protected void onDestroy() {
@@ -67,7 +84,7 @@ public class GestionUsuarios extends AppCompatActivity implements AdapterView.On
 
     public void iniciarElementos(){
         spinner = findViewById(R.id.usuarios_spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+        adapter = new ArrayAdapter<>(
                 this,android.R.layout.simple_spinner_item,usuarios);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -84,6 +101,20 @@ public class GestionUsuarios extends AppCompatActivity implements AdapterView.On
                 startActivity(intent);
             }
         });
+
+        btnNuevo = findViewById(R.id.btnNuevoUsuario);
+
+        btnNuevo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), NuevoUsuario.class);
+                startActivity(intent);
+            }
+        });
+
+        btnEliminar = findViewById(R.id.btnEliminar);
+
+
 
     }
 
