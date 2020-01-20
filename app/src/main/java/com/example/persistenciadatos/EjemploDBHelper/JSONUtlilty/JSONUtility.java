@@ -1,93 +1,64 @@
 package com.example.persistenciadatos.EjemploDBHelper.JSONUtlilty;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.util.JsonWriter;
+import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONStringer;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.persistenciadatos.Encriptacion.decode;
+import static com.example.persistenciadatos.Encriptacion.encode;
+
 public class JSONUtility {
 
-    public static void writeJsonStream(OutputStream out, Cursor usuarios) throws IOException {
-        JsonWriter writer = new JsonWriter(new OutputStreamWriter(out));
-        writer.setIndent("  ");
-        writeUsersArray(writer, usuarios);
-        writer.close();
-    }
+    public static void crearJSONBackup(String cadena, Context context){
+        File ruta = context.getFilesDir();
 
-    public static void writeUsersArray(JsonWriter writer, Cursor usuarios) throws IOException {
-        writer.beginArray();
-        if(usuarios.moveToFirst()){
-            do{
-                List<String> usuario = new ArrayList<>();
-                usuario.add(usuarios.getString(0));
-                usuario.add(usuarios.getString(1));
-                usuario.add(usuarios.getString(2));
-                usuario.add(usuarios.getString(3));
-                usuario.add(usuarios.getString(4));
-
-                writeUser(writer,usuario);
-            }while (usuarios.moveToNext());
-
+        File f = new File(ruta.getAbsolutePath(),"backup.json");
+        try {
+            OutputStreamWriter fout = new OutputStreamWriter(
+                    new FileOutputStream(f,true)
+            );
+            fout.write(cadena);//falta encode
+            fout.close();
+        }catch (Exception ex){
+            Log.e("Debug","Error al escribir el fichero interno");
         }
-        writer.endArray();
     }
 
-    public static void writeUser(JsonWriter writer, List<String> user) throws IOException {
-        writer.beginObject();
-        writer.name("id").value(user.get(0));
-        writer.name("nombre_usuario").value(user.get(1));
-        writer.name("nombre_completo").value(user.get(2));
-        writer.name("password").value(user.get(3));
-        writer.name("email").value(user.get(4));
-        writer.endObject();
-    }
+    public static JSONArray leerJSONBackup(Context context){
+        JSONArray usuarios = null;
+        String cadena = "";
+        File ruta = context.getFilesDir();
+        File f = new File(ruta.getAbsolutePath(),"backup.json");
+        try {
 
-  /*  public void writeJsonStream(OutputStream out, List<Message> messages) throws IOException {
-        JsonWriter writer = new JsonWriter(new OutputStreamWriter(out, "UTF-8"));
-        writer.setIndent("  ");
-        writeMessagesArray(writer, messages);
-        writer.close();
-    }
+            BufferedReader fin = new BufferedReader(
+                    new InputStreamReader(new FileInputStream(f)));
+            String line = fin.readLine();
 
-    public void writeMessagesArray(JsonWriter writer, List<Message> messages) throws IOException {
-        writer.beginArray();
-        for (Message message : messages) {
-            writeMessage(writer, message);
+            while (line != null) {
+                cadena += line;
+                line = fin.readLine();
+            }
+            fin.close();
+            usuarios = new JSONArray(cadena);
+        }catch (Exception ex){
+            Log.e("Debug","Error al leer el fichero interno");
         }
-        writer.endArray();
+        return usuarios;
     }
-
-    public void writeMessage(JsonWriter writer, Message message) throws IOException {
-        writer.beginObject();
-        writer.name("id").value(message.getId());
-        writer.name("text").value(message.getText());
-        if (message.getGeo() != null) {
-            writer.name("geo");
-            writeDoublesArray(writer, message.getGeo());
-        } else {
-            writer.name("geo").nullValue();
-        }
-        writer.name("user");
-        writeUser(writer, message.getUser());
-        writer.endObject();
-    }
-
-    public void writeUser(JsonWriter writer, User user) throws IOException {
-        writer.beginObject();
-        writer.name("name").value(user.getName());
-        writer.name("followers_count").value(user.getFollowersCount());
-        writer.endObject();
-    }
-
-    public void writeDoublesArray(JsonWriter writer, List<Double> doubles) throws IOException {
-        writer.beginArray();
-        for (Double value : doubles) {
-            writer.value(value);
-        }
-        writer.endArray();
-    }*/
 }

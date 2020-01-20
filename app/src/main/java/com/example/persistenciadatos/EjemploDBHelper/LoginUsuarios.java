@@ -8,6 +8,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Environment;
@@ -23,13 +24,21 @@ import com.example.persistenciadatos.EjemploDBHelper.JSONUtlilty.JSONUtility;
 import com.example.persistenciadatos.EjemploDBHelper.SQLiteHelper.SQliteHelper;
 import com.example.persistenciadatos.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.List;
 
+import static com.example.persistenciadatos.EjemploDBHelper.JSONUtlilty.JSONUtility.crearJSONBackup;
+import static com.example.persistenciadatos.EjemploDBHelper.JSONUtlilty.JSONUtility.leerJSONBackup;
 import static com.example.persistenciadatos.Encriptacion.encode;
 import static java.lang.System.out;
 
@@ -86,6 +95,7 @@ public class LoginUsuarios extends AppCompatActivity {
                 crearBackup();
                 return true;
             case R.id.restaurar_backup:
+                leerBackup();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -94,17 +104,33 @@ public class LoginUsuarios extends AppCompatActivity {
 
     public void crearBackup(){
 
-        File ruta = getApplicationContext().getFilesDir();
+        Cursor usuarios = dbHelper.consultarUsuarios(db);
+        JSONArray listaUsuarios = new JSONArray();
+        if(usuarios.moveToFirst()){
+            do{
+                try {
+                JSONObject usuario = new JSONObject();
+                usuario.put("id",usuarios.getString(0));
+                usuario.put("nombre",usuarios.getString(1));
+                usuario.put("nombre_completo",usuarios.getString(2));
+                usuario.put("password",usuarios.getString(3));
+                usuario.put("email",usuarios.getString(4));
+                listaUsuarios.put(usuario);
 
-        File f = new File(ruta.getAbsolutePath(),"backup.json");
-        try {
-            OutputStream fout = openFileOutput(f.getAbsolutePath(), Context.MODE_PRIVATE);
-            JSONUtility.writeJsonStream(fout,dbHelper.consultarUsuarios(db));
-            fout.close();
-        }catch (Exception ex){
-            Log.e("Debug","Error al escribir el fichero interno");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }while (usuarios.moveToNext());
+
         }
+        crearJSONBackup(listaUsuarios.toString(),getApplicationContext());
 
+    }
+
+    public void leerBackup(){
+        
+        JSONArray listaUsuarios = leerJSONBackup(getApplicationContext());
+        Log.d("Debug",listaUsuarios.toString());
     }
 
     @Override
