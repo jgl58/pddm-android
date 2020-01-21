@@ -45,14 +45,14 @@ public class SQliteHelper extends SQLiteOpenHelper {
         String[] columnas = new String[] {"nombre_usuario","password"};
         String[] args = new String[]{nombre,password};
 
-        Cursor result = db.query("Usuarios",columnas,"nombre_usuario=? and password=?",args,null,null,null);
+        Cursor result = db.query("UsuarioDAO",columnas,"nombre_usuario=? and password=?",args,null,null,null);
         return result;
     }
 
     public Cursor getUsuario(String id, SQLiteDatabase db){
         String[] args = new String[]{id};
 
-        //Cursor result = db.query("Usuarios",columnas,"id=?",args,null,null,null);
+        //Cursor result = db.query("UsuarioDAO",columnas,"id=?",args,null,null,null);
         Cursor result = db.rawQuery("SELECT * FROM Usuarios WHERE id=?",args);
         return result;
     }
@@ -60,12 +60,12 @@ public class SQliteHelper extends SQLiteOpenHelper {
     public void deleteUsuario(String id, SQLiteDatabase db){
         String[] args = new String[]{id};
 
-        db.delete("Usuarios","id=?",args);
+        db.delete("UsuarioDAO","id=?",args);
     }
 
     public Cursor consultarUsuarios(SQLiteDatabase db){
 
-        //Cursor result = db.query("Usuarios",columnas,"nombre_usuario=? and password=?",args,null,null,null);
+        //Cursor result = db.query("UsuarioDAO",columnas,"nombre_usuario=? and password=?",args,null,null,null);
         Cursor result = db.rawQuery("SELECT * FROM Usuarios",null);
 
         return result;
@@ -73,12 +73,12 @@ public class SQliteHelper extends SQLiteOpenHelper {
 
     public void actualizarUsuario(ContentValues values, String id, SQLiteDatabase db){
         String[] args = new String[]{id};
-        db.update("Usuarios",values,"id=?",args);
+        db.update("UsuarioDAO",values,"id=?",args);
     }
 
     public Boolean crearUsuario(ContentValues values, SQLiteDatabase db){
         try {
-            db.insertOrThrow("Usuarios", null, values);
+            db.insertOrThrow("UsuarioDAO", null, values);
             return true;
 
         }catch (Exception e){

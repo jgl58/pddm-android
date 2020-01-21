@@ -162,7 +162,7 @@ public class LoginUsuarios extends AppCompatActivity {
     public Dialog mostrarDialog() {
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Error. Usuario no encontrado")
+        builder.setMessage("Error. UsuarioRoom no encontrado")
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // FIRE ZE MISSILES!
