@@ -40,21 +40,13 @@ public class SQliteHelper extends SQLiteOpenHelper {
     }
 
     //Cambiar a que devuelva un cursor
-    public Boolean consultarUsuario(String nombre, String password, SQLiteDatabase db){
+    public Cursor consultarUsuario(String nombre, String password, SQLiteDatabase db){
 
         String[] columnas = new String[] {"nombre_usuario","password"};
         String[] args = new String[]{nombre,password};
 
         Cursor result = db.query("Usuarios",columnas,"nombre_usuario=? and password=?",args,null,null,null);
-        Boolean encontrado = false;
-
-        if(result.moveToFirst()){
-            do{
-                encontrado = true;
-            }while (result.moveToNext());
-        }
-
-        return encontrado;
+        return result;
     }
 
     public Cursor getUsuario(String id, SQLiteDatabase db){

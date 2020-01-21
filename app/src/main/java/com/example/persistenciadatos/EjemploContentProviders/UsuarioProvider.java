@@ -48,11 +48,16 @@ public class UsuarioProvider extends ContentProvider {
 
         Log.d("Debug","Query");
         Cursor c = null;
-        if(uriMatcher.match(uri) == USUARIOS){
-            SQLiteDatabase db = dbHelper.getWritableDatabase();
-            c = dbHelper.consultarUsuarios(db);
-        }
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        switch (uriMatcher.match(uri)){
+            case USUARIOS:
+                c = dbHelper.consultarUsuarios(db);
+                break;
 
+            case USUARIOS_ID:
+                c = dbHelper.getUsuario(uri.getLastPathSegment(),db);
+                break;
+        }
 
         return c;
     }

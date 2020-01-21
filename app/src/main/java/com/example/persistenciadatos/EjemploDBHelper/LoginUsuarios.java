@@ -60,9 +60,9 @@ public class LoginUsuarios extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Boolean login = dbHelper.consultarUsuario(nombre.getText().toString(),password.getText().toString(),db);
+                Cursor login = dbHelper.consultarUsuario(nombre.getText().toString(),password.getText().toString(),db);
 
-                if(!login){
+                if(!login.moveToFirst()){
 
                     mostrarDialog().show();
                 }else{
