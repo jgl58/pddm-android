@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.persistenciadatos">
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <permission android:name="com.example.persistenciadatos.permission.ACCESS_PROVIDER" />
 
     <application
         android:allowBackup="true"
@@ -9,6 +11,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <provider
+            android:authorities="com.example.persistenciadatos"
+            android:name=".EjemploContentProviders.UsuarioProvider"
+            android:grantUriPermissions="true"
+            android:exported="true"
+            android:permission="com.example.persistenciadatos.permission.ACCESS_PROVIDER">
+        </provider>
         <activity android:name=".EjemploDBHelper.NuevoUsuario"></activity>
         <activity android:name=".EjemploDBHelper.ActualizarActivity" />
         <activity android:name=".EjemploDBHelper.LoginUsuarios" />
@@ -25,10 +35,6 @@
                 android:value="com.example.persistenciadatos.EjemploSettings.Ejemplo2" />
         </activity>
         <activity android:name=".EjemploSettings.Ejemplo2" />
-        <activity
-            android:name=".Ejemplo2"
-            android:label="@string/title_activity_ejemplo2"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Ejemplo1.ActivityMostrar" />
         <activity android:name=".Ejemplo1.Ejemplo1" />
         <activity android:name=".MainActivity">

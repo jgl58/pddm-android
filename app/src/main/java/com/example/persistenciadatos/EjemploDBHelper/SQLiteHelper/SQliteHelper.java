@@ -30,11 +30,16 @@ public class SQliteHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.d("Debug","Upgrade");
-        db.execSQL("DROP TABLE IF EXISTS Usuarios");
-        db.execSQL(createTable);
-        db.execSQL(createUser);
+        Log.d("Debug", String.valueOf(oldVersion));
+        Log.d("Debug", String.valueOf(newVersion));
+
+        if(oldVersion < 2){
+            String createTlf = "ALTER TABLE Usuarios ADD telefono TEXT";
+            db.execSQL(createTlf);
+        }
     }
 
+    //Cambiar a que devuelva un cursor
     public Boolean consultarUsuario(String nombre, String password, SQLiteDatabase db){
 
         String[] columnas = new String[] {"nombre_usuario","password"};

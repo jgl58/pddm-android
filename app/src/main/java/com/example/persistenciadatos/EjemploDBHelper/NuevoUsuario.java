@@ -15,6 +15,8 @@ import android.widget.EditText;
 import com.example.persistenciadatos.EjemploDBHelper.SQLiteHelper.SQliteHelper;
 import com.example.persistenciadatos.R;
 
+import static com.example.persistenciadatos.EjemploDBHelper.BackupUtlilty.BackupUtility.DB_VERSION;
+
 public class NuevoUsuario extends AppCompatActivity {
 
     SQliteHelper dbHelper;
@@ -27,7 +29,7 @@ public class NuevoUsuario extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nuevo_usuario);
         inicializarElementos();
-        dbHelper = new SQliteHelper(this,"DBUsuarios",null,1);
+        dbHelper = new SQliteHelper(this,"DBUsuarios",null,DB_VERSION);
         db = dbHelper.getWritableDatabase();
 
         btnGuardar.setOnClickListener(new View.OnClickListener() {

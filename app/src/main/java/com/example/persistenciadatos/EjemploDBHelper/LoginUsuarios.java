@@ -3,13 +3,14 @@ package com.example.persistenciadatos.EjemploDBHelper;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ActionBar;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -20,27 +21,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.persistenciadatos.EjemploDBHelper.JSONUtlilty.JSONUtility;
+import com.example.persistenciadatos.EjemploContentProviders.Usuario;
+import com.example.persistenciadatos.EjemploContentProviders.UsuarioProvider;
 import com.example.persistenciadatos.EjemploDBHelper.SQLiteHelper.SQliteHelper;
 import com.example.persistenciadatos.R;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.util.ArrayList;
-import java.util.List;
 
-import static com.example.persistenciadatos.EjemploDBHelper.JSONUtlilty.JSONUtility.crearJSONBackup;
-import static com.example.persistenciadatos.EjemploDBHelper.JSONUtlilty.JSONUtility.leerJSONBackup;
-import static com.example.persistenciadatos.Encriptacion.encode;
-import static java.lang.System.out;
+import static com.example.persistenciadatos.EjemploDBHelper.BackupUtlilty.BackupUtility.DB_VERSION;
+import static com.example.persistenciadatos.EjemploDBHelper.BackupUtlilty.BackupUtility.exportFile;
+import static com.example.persistenciadatos.EjemploDBHelper.BackupUtlilty.BackupUtility.importFile;
 
 public class LoginUsuarios extends AppCompatActivity {
 
@@ -48,6 +40,7 @@ public class LoginUsuarios extends AppCompatActivity {
     Button login;
     SQliteHelper dbHelper;
     SQLiteDatabase db;
+    UsuarioProvider provider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +51,9 @@ public class LoginUsuarios extends AppCompatActivity {
         password = findViewById(R.id.etPassword);
         login = findViewById(R.id.btnLogin);
 
-        dbHelper = new SQliteHelper(this,"DBUsuarios",null,1);
+        dbHelper = new SQliteHelper(this,"DBUsuarios",null,DB_VERSION);
         db = dbHelper.getWritableDatabase();
+        provider = new UsuarioProvider();
 
 
         login.setOnClickListener(new View.OnClickListener() {
@@ -72,11 +66,33 @@ public class LoginUsuarios extends AppCompatActivity {
 
                     mostrarDialog().show();
                 }else{
-                    startActivity(new Intent(getApplicationContext(),GestionUsuarios.class));
+                  //  startActivity(new Intent(getApplicationContext(),GestionUsuarios.class));
+                    String [] projection = new String[]{
+                            Usuario.COL_NOMBRE
+                    };
+
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+
+                        Cursor result = getContentResolver().query(
+                                provider.CONTENT_URI,
+                                projection,
+                                null,
+                                null
+                        );
+
+                        if (result.moveToFirst()) {
+                            do {
+                                Log.d("Debug", result.getString(0));
+                            } while (result.moveToNext());
+
+                        }
+                    }
                 }
 
             }
         });
+
+
 
     }
 
@@ -104,33 +120,37 @@ public class LoginUsuarios extends AppCompatActivity {
 
     public void crearBackup(){
 
-        Cursor usuarios = dbHelper.consultarUsuarios(db);
-        JSONArray listaUsuarios = new JSONArray();
-        if(usuarios.moveToFirst()){
-            do{
-                try {
-                JSONObject usuario = new JSONObject();
-                usuario.put("id",usuarios.getString(0));
-                usuario.put("nombre",usuarios.getString(1));
-                usuario.put("nombre_completo",usuarios.getString(2));
-                usuario.put("password",usuarios.getString(3));
-                usuario.put("email",usuarios.getString(4));
-                listaUsuarios.put(usuario);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+            File src = new File(db.getPath());
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }while (usuarios.moveToNext());
+            String dstPath = getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS) + File.separator + "backup" + File.separator;
 
+            File dst = new File(dstPath);
+
+            try {
+                exportFile(src, dst);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        crearJSONBackup(listaUsuarios.toString(),getApplicationContext());
-
     }
 
     public void leerBackup(){
-        
-        JSONArray listaUsuarios = leerJSONBackup(getApplicationContext());
-        Log.d("Debug",listaUsuarios.toString());
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            File dst = new File(db.getPath());
+
+            String srcPath = getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS) + File.separator + "backup" + File.separator+"DBUsuarios";
+
+
+            File src = new File(srcPath);
+
+            try {
+                importFile(src, dst);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override

@@ -13,18 +13,20 @@ import android.widget.EditText;
 import com.example.persistenciadatos.EjemploDBHelper.SQLiteHelper.SQliteHelper;
 import com.example.persistenciadatos.R;
 
+import static com.example.persistenciadatos.EjemploDBHelper.BackupUtlilty.BackupUtility.DB_VERSION;
+
 public class ActualizarActivity extends AppCompatActivity {
     SQliteHelper dbHelper;
     SQLiteDatabase db;
     Button btnGuardar;
-    EditText nombre, password, nombreCompleto, email;
+    EditText nombre, password, nombreCompleto, email, telefono;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actualizar);
         inicializarElementos();
 
-        dbHelper = new SQliteHelper(this,"DBUsuarios",null,1);
+        dbHelper = new SQliteHelper(this,"DBUsuarios",null,DB_VERSION);
         db = dbHelper.getWritableDatabase();
 
 
@@ -35,6 +37,7 @@ public class ActualizarActivity extends AppCompatActivity {
                 password.setText(result.getString(2));
                 nombreCompleto.setText(result.getString(3));
                 email.setText(result.getString(4));
+                telefono.setText(result.getString(5));
             }while (result.moveToNext());
 
         }
@@ -47,6 +50,7 @@ public class ActualizarActivity extends AppCompatActivity {
                 values.put("nombre_completo", String.valueOf(nombreCompleto.getText()));
                 values.put("password", String.valueOf(password.getText()));
                 values.put("email", String.valueOf(email.getText()));
+                values.put("telefono", String.valueOf(telefono.getText()));
                 dbHelper.actualizarUsuario(values,getIntent().getStringExtra("ID"),db);
                 finish();
             }
@@ -66,5 +70,6 @@ public class ActualizarActivity extends AppCompatActivity {
         password = findViewById(R.id.etNewPass);
         nombreCompleto = findViewById(R.id.etNewNombreCompleto);
         email = findViewById(R.id.etNewEmail);
+        telefono = findViewById(R.id.etTelefono);
     }
 }

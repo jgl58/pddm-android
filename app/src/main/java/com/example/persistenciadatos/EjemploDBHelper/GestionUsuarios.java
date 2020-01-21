@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.example.persistenciadatos.EjemploDBHelper.BackupUtlilty.BackupUtility.DB_VERSION;
+
 public class GestionUsuarios extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     Button btnActualizar, btnNuevo, btnEliminar;
@@ -37,7 +39,7 @@ public class GestionUsuarios extends AppCompatActivity implements AdapterView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gestion);
 
-        dbHelper = new SQliteHelper(this,"DBUsuarios",null,1);
+        dbHelper = new SQliteHelper(this,"DBUsuarios",null,DB_VERSION);
         db = dbHelper.getWritableDatabase();
         usuarios = new ArrayList<>();
         mapUsuarios = new HashMap<>();
