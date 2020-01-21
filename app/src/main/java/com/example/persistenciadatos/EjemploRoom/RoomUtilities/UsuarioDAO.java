@@ -1,5 +1,6 @@
 package com.example.persistenciadatos.EjemploRoom.RoomUtilities;
 
+import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Entity;
 import androidx.room.Insert;
@@ -8,7 +9,7 @@ import androidx.room.Update;
 
 import java.util.List;
 
-@Entity
+@Dao
 public interface UsuarioDAO {
     @Query("SELECT * FROM UsuarioRoom")
     List<UsuarioRoom> loadAll();
