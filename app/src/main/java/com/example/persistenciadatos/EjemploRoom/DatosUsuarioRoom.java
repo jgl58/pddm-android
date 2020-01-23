@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -81,7 +82,6 @@ public class DatosUsuarioRoom extends AppCompatActivity {
     }
 
     public void crearBackup(){
-
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
             File src = new File(getDatabasePath("DBUsuariosRoom").getAbsolutePath());
 
