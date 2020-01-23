@@ -13,7 +13,7 @@ public class BackupUtility {
     public static int DB_VERSION = 2;
 
 
-    public static File exportFile(File src, File dst) throws IOException {
+    public static File exportFile(File src, File dst, String database) throws IOException {
 
         //if folder does not exist
         if (!dst.exists()) {
@@ -21,7 +21,7 @@ public class BackupUtility {
                 return null;
             }
         }
-        File expFile = new File(dst.getPath() + File.separator + "DBUsuarios");
+        File expFile = new File(dst.getPath() + File.separator + database);
         FileChannel inChannel = null;
         FileChannel outChannel = null;
 

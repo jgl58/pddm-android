@@ -8,4 +8,8 @@
         android:id="@+id/restaurar_backup"
         android:orderInCategory="100"
         android:title="Restaurar backup"/>
+    <item
+        android:id="@+id/gestion"
+        android:orderInCategory="100"
+        android:title="Gestion Usuarios"/>
 </menu>

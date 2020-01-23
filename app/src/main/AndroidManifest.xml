@@ -13,7 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EjemploRoom.ActualizarRoom"></activity>
+        <activity android:name=".EjemploRoom.DatosUsuarioRoom"></activity>
+        <activity android:name=".EjemploDBHelper.DatosUsuario" />
+        <activity android:name=".EjemploRoom.ActualizarRoom" />
         <activity android:name=".EjemploRoom.NuevoUsuarioRoom" />
         <activity android:name=".EjemploRoom.GestionRoom" />
         <activity android:name=".EjemploRoom.LoginRoom" />

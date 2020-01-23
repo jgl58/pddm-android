@@ -63,10 +63,11 @@ public class LoginUsuarios extends AppCompatActivity {
                 Cursor login = dbHelper.consultarUsuario(nombre.getText().toString(),password.getText().toString(),db);
 
                 if(!login.moveToFirst()){
-
                     mostrarDialog().show();
                 }else{
-                    startActivity(new Intent(getApplicationContext(),GestionUsuarios.class));
+                    Intent intent = new Intent(getApplicationContext(),DatosUsuario.class);
+                    intent.putExtra("ID",login.getString(0));
+                    startActivity(intent);
                 }
 
             }
@@ -76,62 +77,6 @@ public class LoginUsuarios extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.backup_settings, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.crear_backup:
-                crearBackup();
-                return true;
-            case R.id.restaurar_backup:
-                leerBackup();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    public void crearBackup(){
-
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-            File src = new File(db.getPath());
-
-            String dstPath = getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS) + File.separator + "backup" + File.separator;
-
-            File dst = new File(dstPath);
-
-            try {
-                exportFile(src, dst);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public void leerBackup(){
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            File dst = new File(db.getPath());
-
-            String srcPath = getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS) + File.separator + "backup" + File.separator+"DBUsuarios";
-
-
-            File src = new File(srcPath);
-
-            try {
-                importFile(src, dst);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
     @Override
     protected void onDestroy() {

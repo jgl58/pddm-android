@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.persistenciadatos.EjemploDBHelper.DatosUsuario;
 import com.example.persistenciadatos.EjemploRoom.RoomUtilities.DatabaseRoom;
 import com.example.persistenciadatos.EjemploRoom.RoomUtilities.UsuarioRoom;
 import com.example.persistenciadatos.R;
@@ -43,7 +44,9 @@ public class LoginRoom extends AppCompatActivity {
 
                if(user != null){
                    Log.d("Debug","Login correcto");
-                   startActivity(new Intent(getApplicationContext(),GestionRoom.class));
+                   Intent intent = new Intent(getApplicationContext(), DatosUsuarioRoom.class);
+                   intent.putExtra("ID",user.getId());
+                   startActivity(intent);
                }else{
                    Log.d("Debug","Login incorrecto");
                }
