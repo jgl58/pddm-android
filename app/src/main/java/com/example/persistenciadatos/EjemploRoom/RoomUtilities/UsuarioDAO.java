@@ -12,10 +12,10 @@ import java.util.List;
 @Dao
 public interface UsuarioDAO {
     @Query("SELECT * FROM UsuarioRoom")
-    List<UsuarioRoom> loadAll();
+    List<UsuarioRoom> getAll();
     @Query("SELECT * FROM UsuarioRoom WHERE id IN (:userIds)")
     List<UsuarioRoom> loadAllByUserId(int... userIds);
-    @Query("SELECT * FROM UsuarioRoom where nombre LIKE :nombre AND password LIKE :contraseña LIMIT 1")
+    @Query("SELECT * FROM UsuarioRoom where nombre_usuario LIKE :nombre AND password LIKE :contraseña LIMIT 1")
     UsuarioRoom checkLogin(String nombre, String contraseña);
     @Insert
     void insertAll(UsuarioRoom... users);

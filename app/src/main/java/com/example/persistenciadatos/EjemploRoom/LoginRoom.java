@@ -3,6 +3,7 @@ package com.example.persistenciadatos.EjemploRoom;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,9 +28,11 @@ public class LoginRoom extends AppCompatActivity {
         password = findViewById(R.id.etPasswordRoom);
         login = findViewById(R.id.btnLoginRoom);
 
-        db = Room.databaseBuilder(getApplicationContext(),
+        db = DatabaseRoom.getInstance(getApplicationContext());
+
+        /*db = Room.databaseBuilder(getApplicationContext(),
                 DatabaseRoom.class,
-                "usuariosroom").allowMainThreadQueries().build();
+                "DBUsuariosRoom").allowMainThreadQueries().build();*/
 
 
         login.setOnClickListener(new View.OnClickListener() {
@@ -40,6 +43,7 @@ public class LoginRoom extends AppCompatActivity {
 
                if(user != null){
                    Log.d("Debug","Login correcto");
+                   startActivity(new Intent(getApplicationContext(),GestionRoom.class));
                }else{
                    Log.d("Debug","Login incorrecto");
                }

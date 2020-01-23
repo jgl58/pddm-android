@@ -66,27 +66,7 @@ public class LoginUsuarios extends AppCompatActivity {
 
                     mostrarDialog().show();
                 }else{
-                  //  startActivity(new Intent(getApplicationContext(),GestionUsuarios.class));
-                    String [] projection = new String[]{
-                            Usuario.COL_NOMBRE
-                    };
-
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-
-                        Cursor result = getContentResolver().query(
-                                provider.CONTENT_URI,
-                                projection,
-                                null,
-                                null
-                        );
-
-                        if (result.moveToFirst()) {
-                            do {
-                                Log.d("Debug", result.getString(0));
-                            } while (result.moveToNext());
-
-                        }
-                    }
+                    startActivity(new Intent(getApplicationContext(),GestionUsuarios.class));
                 }
 
             }

@@ -6,14 +6,14 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class UsuarioRoom {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private int id;
-    @ColumnInfo(name = "nombre")
+    @ColumnInfo(name = "nombre_usuario")
     private String nombre;
-    @ColumnInfo(name = "nombre_completo")
-    private String nombreCompleto;
     @ColumnInfo(name = "password")
     private String password;
+    @ColumnInfo(name = "nombre_completo")
+    private String nombreCompleto;
     @ColumnInfo(name = "email")
     private String email;
     @ColumnInfo(name = "telefono")
@@ -70,10 +70,10 @@ public class UsuarioRoom {
 
 
     public void set(int p_id, String p_name,
-                    String p_last_name, String p_password, String p_email, String p_telefono){
+                    String p_complete_name, String p_password, String p_email, String p_telefono){
         id=p_id;
         nombre=p_name;
-        nombreCompleto=p_last_name;
+        nombreCompleto=p_complete_name;
         password = p_password;
         email = p_email;
         telefono = p_telefono;

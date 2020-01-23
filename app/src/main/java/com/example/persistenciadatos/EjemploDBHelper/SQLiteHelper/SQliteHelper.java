@@ -45,7 +45,7 @@ public class SQliteHelper extends SQLiteOpenHelper {
         String[] columnas = new String[] {"nombre_usuario","password"};
         String[] args = new String[]{nombre,password};
 
-        Cursor result = db.query("UsuarioDAO",columnas,"nombre_usuario=? and password=?",args,null,null,null);
+        Cursor result = db.query("Usuarios",columnas,"nombre_usuario=? and password=?",args,null,null,null);
         return result;
     }
 
@@ -60,7 +60,7 @@ public class SQliteHelper extends SQLiteOpenHelper {
     public void deleteUsuario(String id, SQLiteDatabase db){
         String[] args = new String[]{id};
 
-        db.delete("UsuarioDAO","id=?",args);
+        db.delete("Usuarios","id=?",args);
     }
 
     public Cursor consultarUsuarios(SQLiteDatabase db){
@@ -73,12 +73,12 @@ public class SQliteHelper extends SQLiteOpenHelper {
 
     public void actualizarUsuario(ContentValues values, String id, SQLiteDatabase db){
         String[] args = new String[]{id};
-        db.update("UsuarioDAO",values,"id=?",args);
+        db.update("Usuarios",values,"id=?",args);
     }
 
     public Boolean crearUsuario(ContentValues values, SQLiteDatabase db){
         try {
-            db.insertOrThrow("UsuarioDAO", null, values);
+            db.insertOrThrow("Usuarios", null, values);
             return true;
 
         }catch (Exception e){

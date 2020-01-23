@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "d761616771d75a3fa34dcfed6fcb4f23",
+    "identityHash": "889d4b25be30de0d7621d4d46e34b1c7",
     "entities": [
       {
         "tableName": "UsuarioRoom",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `nombre` TEXT, `nombre_completo` TEXT, `password` TEXT, `email` TEXT, `telefono` TEXT, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `nombre_usuario` TEXT, `password` TEXT, `nombre_completo` TEXT, `email` TEXT, `telefono` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
@@ -16,19 +16,19 @@
           },
           {
             "fieldPath": "nombre",
-            "columnName": "nombre",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "nombreCompleto",
-            "columnName": "nombre_completo",
+            "columnName": "nombre_usuario",
             "affinity": "TEXT",
             "notNull": false
           },
           {
             "fieldPath": "password",
             "columnName": "password",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "nombreCompleto",
+            "columnName": "nombre_completo",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -49,7 +49,7 @@
           "columnNames": [
             "id"
           ],
-          "autoGenerate": false
+          "autoGenerate": true
         },
         "indices": [],
         "foreignKeys": []
@@ -58,7 +58,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd761616771d75a3fa34dcfed6fcb4f23')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '889d4b25be30de0d7621d4d46e34b1c7')"
     ]
   }
 }

@@ -30,7 +30,7 @@ public class ActualizarActivity extends AppCompatActivity {
         db = dbHelper.getWritableDatabase();
 
 
-        Cursor result = dbHelper.getUsuario(getIntent().getStringExtra("ID"),db);
+        Cursor result = dbHelper.getUsuario(String.valueOf(getIntent().getIntExtra("ID",1)),db);
         if(result.moveToFirst()){
             do{
                 nombre.setText(result.getString(1));
@@ -51,7 +51,7 @@ public class ActualizarActivity extends AppCompatActivity {
                 values.put("password", String.valueOf(password.getText()));
                 values.put("email", String.valueOf(email.getText()));
                 values.put("telefono", String.valueOf(telefono.getText()));
-                dbHelper.actualizarUsuario(values,getIntent().getStringExtra("ID"),db);
+                dbHelper.actualizarUsuario(values, String.valueOf(getIntent().getIntExtra("ID",1)),db);
                 finish();
             }
         });

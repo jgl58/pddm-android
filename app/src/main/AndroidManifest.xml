@@ -13,14 +13,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EjemploRoom.LoginRoom"></activity>
+        <activity android:name=".EjemploRoom.ActualizarRoom"></activity>
+        <activity android:name=".EjemploRoom.NuevoUsuarioRoom" />
+        <activity android:name=".EjemploRoom.GestionRoom" />
+        <activity android:name=".EjemploRoom.LoginRoom" />
 
         <provider
             android:name=".EjemploContentProviders.UsuarioProvider"
             android:authorities="com.example.persistenciadatos"
             android:exported="true"
             android:grantUriPermissions="true"
-            android:permission="com.example.persistenciadatos.permission.ACCESS_PROVIDER"></provider>
+            android:permission="com.example.persistenciadatos.permission.ACCESS_PROVIDER" />
 
         <activity android:name=".EjemploDBHelper.NuevoUsuario" />
         <activity android:name=".EjemploDBHelper.ActualizarActivity" />

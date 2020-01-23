@@ -1,4 +1,4 @@
-package com.example.persistenciadatos.EjemploDBHelper;
+package com.example.persistenciadatos.EjemploRoom;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,7 +13,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
+import com.example.persistenciadatos.EjemploDBHelper.ActualizarActivity;
+import com.example.persistenciadatos.EjemploDBHelper.NuevoUsuario;
 import com.example.persistenciadatos.EjemploDBHelper.SQLiteHelper.SQliteHelper;
+import com.example.persistenciadatos.EjemploRoom.RoomUtilities.DatabaseRoom;
+import com.example.persistenciadatos.EjemploRoom.RoomUtilities.UsuarioRoom;
 import com.example.persistenciadatos.R;
 
 import java.util.ArrayList;
@@ -21,14 +25,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.example.persistenciadatos.EjemploDBHelper.BackupUtlilty.BackupUtility.DB_VERSION;
-
-public class GestionUsuarios extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class GestionRoom extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     Button btnActualizar, btnNuevo, btnEliminar;
-    List<Integer> mapUsuariosIds;
-    SQliteHelper dbHelper;
-    SQLiteDatabase db;
+    List<UsuarioRoom> mapUsuarios;
+    DatabaseRoom db;
     List<String> usuarios;
     ArrayAdapter<String> adapter;
     Spinner spinner;
@@ -37,12 +38,12 @@ public class GestionUsuarios extends AppCompatActivity implements AdapterView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gestion);
+        setContentView(R.layout.activity_gestion_room);
 
-        dbHelper = new SQliteHelper(this,"DBUsuarios",null,DB_VERSION);
-        db = dbHelper.getWritableDatabase();
+        db = DatabaseRoom.getInstance(getApplicationContext());
+
         usuarios = new ArrayList<>();
-        mapUsuariosIds = new ArrayList<>();
+        mapUsuarios = new ArrayList<>();
 
         cargarUsuarios();
         iniciarElementos();
@@ -51,8 +52,9 @@ public class GestionUsuarios extends AppCompatActivity implements AdapterView.On
         btnEliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dbHelper.deleteUsuario(String.valueOf(mapUsuariosIds.get(userId)),db);
-                mapUsuariosIds.remove(userId);
+
+                db.usuarioDAO().delete(mapUsuarios.get(userId));
+                mapUsuarios.remove(userId);
                 adapter.notifyDataSetChanged();
             }
         });
@@ -61,7 +63,7 @@ public class GestionUsuarios extends AppCompatActivity implements AdapterView.On
     @Override
     protected void onRestart() {
         super.onRestart();
-        mapUsuariosIds.clear();
+        mapUsuarios.clear();
         usuarios.clear();
         cargarUsuarios();
     }
@@ -73,20 +75,19 @@ public class GestionUsuarios extends AppCompatActivity implements AdapterView.On
     }
 
     public void cargarUsuarios(){
-        Cursor result = dbHelper.consultarUsuarios(db);
-        if(result.moveToFirst()){
-            do{
-                mapUsuariosIds.add(result.getInt(0));
-                usuarios.add(result.getString(1));
-            }while (result.moveToNext());
+        List<UsuarioRoom> result = db.usuarioDAO().getAll();
+
+        for (int i=0; i<result.size();i++){
+            usuarios.add(result.get(i).getNombre());
+            mapUsuarios.add(result.get(i));
 
         }
-
     }
 
 
+
     public void iniciarElementos(){
-        spinner = findViewById(R.id.usuarios_spinner);
+        spinner = findViewById(R.id.usuarios_spinner_room);
         adapter = new ArrayAdapter<>(
                 this,android.R.layout.simple_spinner_item,usuarios);
 
@@ -94,28 +95,29 @@ public class GestionUsuarios extends AppCompatActivity implements AdapterView.On
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
-        btnActualizar = findViewById(R.id.btnActualizar);
+        btnActualizar = findViewById(R.id.btnActualizarRoom);
 
         btnActualizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), ActualizarActivity.class);
-                intent.putExtra("ID", mapUsuariosIds.get(userId));
+
+                Intent intent = new Intent(getApplicationContext(), ActualizarRoom.class);
+                intent.putExtra("ID", mapUsuarios.get(userId).getId());
                 startActivity(intent);
             }
         });
 
-        btnNuevo = findViewById(R.id.btnNuevoUsuario);
+        btnNuevo = findViewById(R.id.btnNuevoUsuarioRoom);
 
         btnNuevo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), NuevoUsuario.class);
+                Intent intent = new Intent(getApplicationContext(), NuevoUsuarioRoom.class);
                 startActivity(intent);
             }
         });
 
-        btnEliminar = findViewById(R.id.btnEliminar);
+        btnEliminar = findViewById(R.id.btnEliminarRoom);
 
 
 
@@ -123,8 +125,6 @@ public class GestionUsuarios extends AppCompatActivity implements AdapterView.On
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        /*String name = spinner.getSelectedItem().toString();
-        String id = spinnerMap.get(spinner.getSelectedItemPosition());*/
         userId = position;
     }
 
@@ -133,4 +133,3 @@ public class GestionUsuarios extends AppCompatActivity implements AdapterView.On
 
     }
 }
-
