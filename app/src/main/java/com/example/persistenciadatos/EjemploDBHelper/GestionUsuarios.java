@@ -53,9 +53,21 @@ public class GestionUsuarios extends AppCompatActivity implements AdapterView.On
             public void onClick(View v) {
                 dbHelper.deleteUsuario(String.valueOf(mapUsuariosIds.get(userId)),db);
                 mapUsuariosIds.remove(userId);
+                usuarios.remove(userId);
                 adapter.notifyDataSetChanged();
+
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("Debug","OnResume");
+        mapUsuariosIds.clear();
+        usuarios.clear();
+        cargarUsuarios();
+        adapter.notifyDataSetChanged();
     }
 
     @Override

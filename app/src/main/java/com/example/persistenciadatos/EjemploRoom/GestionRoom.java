@@ -55,6 +55,7 @@ public class GestionRoom extends AppCompatActivity implements AdapterView.OnItem
 
                 db.usuarioDAO().delete(mapUsuarios.get(userId));
                 mapUsuarios.remove(userId);
+                usuarios.remove(userId);
                 adapter.notifyDataSetChanged();
             }
         });
